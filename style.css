@@ -1,4 +1,15 @@
 /* main format of homepage*/
 /* CSS validated */
 main {
+    padding-top: 10px;
+    padding-left: 25px;
+    word-wrap: 50px;
 }
+
+html, body {
+    font-family: 'Montserrat Alternates', sans-serif;
+    background-color: rgb(234, 255, 221);
+    color: rgb(106, 68, 212);
+    width: 400px;
+    word-wrap: break-word;
+  }
