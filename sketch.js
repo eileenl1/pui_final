@@ -4,18 +4,18 @@ let bugDirection = "right";
 let bugList= [];
 
 //wave variables
-let w = 1500;
-let h = 1200;
-let scl = 20;
+let w = 2000;
+let h = 1400;
+let scl = 24;
 let cols;
 let rows;
 let yoff = 0.0;
-let margin = 50;
+let margin = 10;
 cols = (w - margin * 2) / scl;
 rows = (h - margin * 2) / scl;
 
 function setup() {
-  createCanvas(windowWidth-90, windowHeight-90);
+  createCanvas(windowWidth-110, windowHeight-180);
   background('rgba(234,255,221,0.25)');
 
   // create bug objects
@@ -36,10 +36,9 @@ function setup() {
     bug8, bug9, bug10, bug11, bug12);
   
   for (bug in bugList) { 
-    bug.addEventListener("click", event => {
-      console.log("hi");
-      console.log(event.target);
-    })
+  /* 
+   add onclick handler for bug
+  */
   }
 
   /* check overlap, remove overlapping bug objects
@@ -52,10 +51,6 @@ function setup() {
   for (bug in bugList) {
     checkOverlap(bug, )
   }
-  */
-
-  /* 
-  if mouse is pressed on object, identify the object and run function specific to object 
   */
 
   //create rock objects
@@ -77,7 +72,6 @@ function setup() {
   bush6 = new Bush();
   bush7 = new Bush();
   bush8 = new Bush();
-
 }
 
 function windowResized() {
@@ -86,6 +80,7 @@ function windowResized() {
 
 function draw() {
   background(234, 255, 221);
+
   //draw background bushes
   noStroke();
   fill("#7BD86C");
