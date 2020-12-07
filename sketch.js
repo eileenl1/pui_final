@@ -2,6 +2,9 @@
 let timer = 0;
 let bugDirection = "right";
 let bugList= [];
+let rockList = [];
+let bushList = [];
+let treeimg;
 
 //wave variables
 let w = 2000;
@@ -14,64 +17,30 @@ let margin = 10;
 cols = (w - margin * 2) / scl;
 rows = (h - margin * 2) / scl;
 
+// use images w p5.js
+
 function setup() {
-  createCanvas(windowWidth-110, windowHeight-180);
+  createCanvas(windowWidth-110, windowHeight-150);
   background('rgba(234,255,221,0.25)');
 
   // create bug objects
-  bug1 = new Bug();
-  bug2 = new Bug();
-  bug3 = new Bug();
-  bug4 = new Bug();
-  bug5 = new Bug();
-  bug6 = new Bug();
-  bug7 = new Bug();
-  bug8 = new Bug();
-  bug9 = new Bug();
-  bug10 = new Bug();
-  bug11 = new Bug();
-  bug12 = new Bug();
-  
-  bugList.push(bug1, bug2, bug3, bug4, bug5, bug6, bug7, 
-    bug8, bug9, bug10, bug11, bug12);
-  
-  for (bug in bugList) { 
-  /* 
-   add onclick handler for bug
-  */
+  for (let i=0; i < 12; i++) {
+    bugList[i] = new Bug();
   }
-
-  /* check overlap, remove overlapping bug objects
-
-  function checkOverlap(object1, object2, list) {
-    if ((Math.abs(object1.x-object2.x))<80 && (Math.abs(object1.y-object2.y)<80)) {
-      list.pop(object1);
-    }
-  }
-  for (bug in bugList) {
-    checkOverlap(bug, )
-  }
-  */
 
   //create rock objects
-  rock1 = new Rock();
-  rock2 = new Rock();
-  rock3 = new Rock();
-  rock4 = new Rock();
-  rock5 = new Rock();
-  rock6 = new Rock();
-  rock7 = new Rock();
-  rock8 = new Rock();
+  for (let i=0; i < 8; i++) {
+    rockList[i] = new Rock();
+  }
 
   //create bush objects
-  bush1 = new Bush();
-  bush2 = new Bush();
-  bush3 = new Bush();
-  bush4 = new Bush();
-  bush5 = new Bush();
-  bush6 = new Bush();
-  bush7 = new Bush();
-  bush8 = new Bush();
+  for (let i=0; i < 8; i++) {
+    bushList[i] = new Bush();
+  }
+
+  loadImage('palmtree.png', img => {
+    image(img, 0, 0);
+  });
 }
 
 function windowResized() {
@@ -121,68 +90,59 @@ function draw() {
     }
 
   // animate bugs
-  bug1.move();
-  bug1.displayBug();
-  bug1.displayInfo(mouseX, mouseY);
-  bug2.move();
-  bug2.displayBug();
-  bug2.displayInfo(mouseX, mouseY);
-  bug3.move();
-  bug3.displayBug();
-  bug3.displayInfo(mouseX, mouseY);
-  bug4.move();
-  bug4.displayBug();
-  bug4.displayInfo(mouseX, mouseY);
-  bug5.move();
-  bug5.displayBug();
-  bug5.displayInfo(mouseX, mouseY);
-  bug6.move();
-  bug6.displayBug();
-  bug6.displayInfo(mouseX, mouseY);
-  bug7.move();
-  bug7.displayBug();
-  bug7.displayInfo(mouseX, mouseY);
-  bug8.move();
-  bug8.displayBug();
-  bug8.displayInfo(mouseX, mouseY);
-  bug9.move();
-  bug9.displayBug();
-  bug9.displayInfo(mouseX, mouseY);
-  bug10.move();
-  bug10.displayBug();
-  bug10.displayInfo(mouseX, mouseY);
-  bug11.move();
-  bug11.displayBug();
-  bug11.displayInfo(mouseX, mouseY);
-  bug12.move();
-  bug12.displayBug();
-  bug12.displayInfo(mouseX, mouseY);
-  
+  for (let i=0; i < bugList.length; i++) {
+    let bug = bugList[i];
+    bug.move();
+    bug.displayBug();
+    bug.displayArrow(mouseX,mouseY);
+}
 
   //draw rocks
-  rock1.displayRock();
-  rock2.displayRock();
-  rock3.displayRock();
-  rock4.displayRock();
-  rock5.displayRock();
-  rock6.displayRock();
-  rock7.displayRock();
-  rock8.displayRock();
+  for (let i=0; i < rockList.length; i++) {
+    let rock = rockList[i];
+    rock.displayRock();
+}
 
   // draw bricks 
-  bush1.displayBush();
-  bush2.displayBush();
-  bush3.displayBush();;
-  bush4.displayBush();
-  bush5.displayBush();
-  bush6.displayBush();
-  bush7.displayBush();
-  bush8.displayBush();
+  for (let i=0; i < bushList.length; i++) {
+    let bush = bushList[i];
+    bush.displayBush();
+}
+
+//draw info box
+stroke(50, 100, 255);
+strokeWeight(5);
+rect(windowWidth-420, 10, 300, 250);
+noStroke();
+fill("#F0FFFF");
+rect(windowWidth-410, 20, 280, 230);
+// exit button to minimize info box
+// read bugType from detectClick();, pick out appropriate html text and image to place in box?
+
+// images are pixelated images of actual bugs, photoshop edits!
+
+//image(treeimg, 100, 100, 100, 100);
 }
 
 // list of possible bugs generated
 var bugTypes = ['ladybug', 'grasshopper', 'rolypoly', 'worm', 'cricket', 'centipede', 
 'pincerbug', 'caterpillar', 'ant', 'beetle', 'slug', 'snail'];
+
+//can click and interact w/ bug, rock, bush objects
+function mousePressed() {
+  for (let i=0; i < bugList.length; i++) {
+    let bug = bugList[i];
+    bug.detectClick(mouseX, mouseY);
+  }
+  for (let i=0; i < rockList.length; i++) {
+    let rock = rockList[i];
+    rock.shiftRock(mouseX,mouseY);
+}
+  for (let i=0; i < bushList.length; i++) {
+    let bush = bushList[i];
+    bush.shiftBush(mouseX,mouseY);
+}
+}
 
 class Bug {
   // creating bug objects at random location
@@ -192,6 +152,7 @@ class Bug {
     this.y = math.floor(random(75, height-75));
     this.speed = 0.1;
     this.bugType = random(bugTypes);
+    this.hover = false;
   }
 
   // move bug to right 5 seconds, then move to left 5 seconds, repeat
@@ -202,6 +163,13 @@ class Bug {
         this.x -= this.speed;
       }
     }
+  
+  detectClick(mouseX, mouseY) {
+    if ((this.hover = true) && (abs(mouseX-(this.x+15))<40) && (abs(mouseY-(this.y+10))<40)) {
+      //display bug info!
+      console.log(this.bugType);
+    }
+  }
 
   displayBug() {
     // bug drawing
@@ -215,9 +183,10 @@ class Bug {
     rect(this.x+27, this.y+20, 3, 4);
   }
 
-  displayInfo(mouseX, mouseY) { 
+  displayArrow(mouseX, mouseY) { 
     //info filler
     if ((abs(mouseX-(this.x+15))<40) && (abs(mouseY-(this.y+10))<40)) {
+      this.hover = true;
       noStroke();
       fill("#ff8f1f");
       rect(this.x+13.5, this.y-28, 5, 18);
@@ -229,7 +198,7 @@ class Bug {
 // create Bush class
 class Bush {
   constructor() {
-    this.x = math.floor(random(50, width-50));
+    this.x = math.floor(random(50, width-150));
     this.y = math.floor(random(50, height-50));
   }
 
@@ -237,10 +206,16 @@ class Bush {
     noStroke();
     fill("#479B5D");
     rect(this.x, this.y, 70, 70);
+    fill("#7BD86C");
+    rect(this.x+10, this.y+10, 10, 10);
+    rect(this.x+50, this.y+30, 10, 10);
+    rect(this.x+20, this.y+50, 10, 10);
   }
 
-  shiftBush() {
-    this.x += 100;
+  shiftBush(mouseX, mouseY) {
+    if ((abs(mouseX-(this.x+15))<40) && (abs(mouseY-(this.y+10))<40)) {
+      this.x += 10;
+    }
   }
 }
 
@@ -253,11 +228,13 @@ class Rock {
 
   displayRock() {
     noStroke();
-    fill("#C3C3B8");
+    fill("#778899");
     rect(this.x, this.y, 50, 50);
     }
 
-  shiftRock() {
-    this.x += 100;
+  shiftRock(mouseX, mouseY) {
+    if ((abs(mouseX-(this.x+15))<40) && (abs(mouseY-(this.y+10))<40)) {
+      this.x += 10;
   }
+}
 }
