@@ -39,7 +39,7 @@ function setup() {
   }
 
   loadImage('palmtree.png', img => {
-    image(img, 0, 0);
+    image(img, 100, 100, 100, 100);
   });
 }
 
