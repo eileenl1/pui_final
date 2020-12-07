@@ -38,9 +38,11 @@ function setup() {
     bushList[i] = new Bush();
   }
 
+  /*
   loadImage('palmtree.png', img => {
     image(img, 100, 100, 400, 400);
   });
+  */
 }
 
 function windowResized() {
@@ -120,8 +122,9 @@ rect(windowWidth-410, 20, 280, 230);
 // read bugType from detectClick();, pick out appropriate html text and image to place in box?
 
 // images are pixelated images of actual bugs, photoshop edits!
-
-//image(treeimg, 100, 100, 100, 100);
+loadImage('palmtree.png', img => {
+  image(img, 100, 100, 400, 400);
+});
 }
 
 // list of possible bugs generated
