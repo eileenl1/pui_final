@@ -3,7 +3,6 @@
 
 main {
     padding-left: 30px;
-    word-wrap: 50px;
     display: grid;
     grid-template-columns: repeat(2, auto);
     grid-template-rows: repeat(2, auto);
