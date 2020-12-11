@@ -1,17 +1,26 @@
 /* main format of homepage*/
 /* CSS validated */
+
 main {
     padding-left: 30px;
     word-wrap: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    grid-template-rows: repeat(2, auto);
+    align-items: stretch;
 }
 
 html, body {
     font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 17px;
     background-color: rgb(234, 255, 221);
     color: rgb(106, 68, 212);
-    width: 400px;
-    word-wrap: break-word;
   }
+
+.textbox {
+    width: 370px;
+    word-wrap: break-word;
+}
 
 #topborder {
     width: 100px;
@@ -24,14 +33,20 @@ position: fixed;
 }
 #left, #right {
     top: 0; bottom: 0;
-    width: 20px;
+    width: 10px;
     }
     #left {left: 0;}
     #right {right: 0;}
     
 #top, #bottom {
     left: 0; right: 0;
-    height: 20px;
+    height: 10px;
     }
     #top {top: 0;}
     #bottom {bottom: 0;}
+
+/* portfolio button */
+.logo {
+    margin-top: 20px;
+    margin-left: -150px;
+}
